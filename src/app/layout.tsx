@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { UserProvider } from "./context/user";
+import LargeWithLogoLeft from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Tax Refund",
@@ -17,7 +18,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            {children}
+            <LargeWithLogoLeft />
+          </UserProvider>
         </Providers>
       </body>
     </html>
