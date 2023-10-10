@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import { useState } from "react";
 
 const Home = () => {
   return <Box>Home</Box>;

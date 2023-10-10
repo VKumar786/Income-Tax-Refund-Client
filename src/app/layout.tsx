@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { UserProvider } from "./context/user";
 import LargeWithLogoLeft from "@/components/Footer";
+import WithSubnavigation from "@/components/UserNavbar";
 
 export const metadata: Metadata = {
   title: "Tax Refund",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <UserProvider>
+            <WithSubnavigation />
             {children}
             <LargeWithLogoLeft />
           </UserProvider>
