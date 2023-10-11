@@ -58,7 +58,7 @@ const AssessmentYear = () => {
       boxShadow={"sm"}
       borderRadius={"7px"}
       padding={"20px"}
-      margin={"0 0 14px 0"}
+      margin={"0 0 30px 0"}
     >
       <Heading
         color={"#000000DE"}

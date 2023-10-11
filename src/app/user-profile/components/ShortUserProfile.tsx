@@ -15,7 +15,7 @@ import {
 
 export default function ShortUserProfile() {
   return (
-    <Center>
+    <Box>
       <Box
         w={"full"}
         bg={useColorModeValue("white", "gray.900")}
@@ -114,6 +114,6 @@ export default function ShortUserProfile() {
           </Button>
         </Stack>
       </Box>
-    </Center>
+    </Box>
   );
 }

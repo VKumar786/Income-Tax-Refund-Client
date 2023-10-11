@@ -35,33 +35,23 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
-  Center,
-  Text,
 } from "@chakra-ui/react";
 
 import { UserContext } from "../context/user";
-import Link from "next/link";
 
 const btnStages = ["Send OTP", "Verify"];
 const oneTimePwd = "1234";
 
-export default function Multistep() {
+export default function AdminLogin() {
   const toast = useToast();
-  const [show, setShow] = useState(false);
 
   const { setPan, setPhone } = useContext(UserContext);
-  const panInputRef = useRef<HTMLInputElement | null>(null);
-  const otpInputRef = useRef<HTMLInputElement | null>(null);
+  const otpRef = useRef<HTMLInputElement | null>(null);
   const [formStage, setFormStage] = useState<number>(0);
   const [data, setData] = useState<DataType>({
-    pan: "",
     phoneNumber: "",
     otp: "0000",
   });
-
-  useEffect(() => {
-    if (panInputRef.current) panInputRef.current.focus();
-  }, []);
 
   const handleChanges = (e: ChangeEvent<HTMLInputElement>) => {
     setData((prev) => {
@@ -74,23 +64,6 @@ export default function Multistep() {
 
   const handleSubmit = useCallback(() => {
     if (formStage === 0) {
-      // validate pan number
-      const pattern = /[A-Z]{5}[0-9]{4}[A-Z]{1}/;
-      const isValid = pattern.test(data.pan);
-
-      if (!isValid) {
-        toast({
-          title: "Invalid PAN.",
-          description: "Please 🙏 Enter Valid PAN",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-        return;
-      }
-
-      setPan(data.pan);
-
       // validate Phone number
       const regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
@@ -110,7 +83,7 @@ export default function Multistep() {
       setFormStage(1);
 
       setTimeout(() => {
-        if (otpInputRef.current) otpInputRef.current?.focus();
+        if (otpRef.current) otpRef.current.focus();
       }, 300);
       // TODO : send otp
     } else if (formStage === 1) {
@@ -140,15 +113,7 @@ export default function Multistep() {
         window.location.href = "/user-profile";
       }, 1000);
     }
-  }, [
-    data.otp,
-    data.pan,
-    data.phoneNumber,
-    formStage,
-    setPan,
-    setPhone,
-    toast,
-  ]);
+  }, [data.otp, data.phoneNumber, formStage, setPhone, toast]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -186,24 +151,8 @@ export default function Multistep() {
         >
           <>
             <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
-              Welcome back! ✌️
+              Welcome back! Admin ✌️
             </Heading>
-            {/* PAN */}
-            <FormControl>
-              <FormLabel htmlFor="pan" fontWeight={"normal"}>
-                PAN
-              </FormLabel>
-              <Input
-                type="text"
-                ref={panInputRef}
-                placeholder="Enter 10-character PAN"
-                name="pan"
-                onChange={handleChanges}
-                value={data.pan}
-                background={"#F7FAFC"}
-              />
-              {/* <FormHelperText>We&apos;ll never share your PAN.</FormHelperText> */}
-            </FormControl>
 
             {/* Phone Number */}
             <FormControl>
@@ -229,7 +178,7 @@ export default function Multistep() {
                 <HStack>
                   <PinInput>
                     <PinInputField
-                      ref={otpInputRef}
+                      ref={otpRef}
                       value={data.otp[0]}
                       onChange={(e) =>
                         setData((prev) => ({
@@ -282,17 +231,7 @@ export default function Multistep() {
           </>
           <ButtonGroup mt="5%" w="100%">
             <Flex w="100%" justifyContent="space-between">
-              <Flex>
-                {/* Google */}
-                {/* <Button w={"full"} variant={"outline"} leftIcon={""}> */}
-                <Link href="/admin-login">
-                  <Button w={"full"} variant={"outline"}>
-                    <Center>
-                      <Text>👨🏻‍💻 Admin Login</Text>
-                    </Center>
-                  </Button>
-                </Link>
-              </Flex>
+              <Flex></Flex>
               <Button
                 w="7rem"
                 colorScheme="red"
@@ -310,7 +249,6 @@ export default function Multistep() {
 }
 
 type DataType = {
-  pan: string;
   phoneNumber: string;
   otp: string;
 };
