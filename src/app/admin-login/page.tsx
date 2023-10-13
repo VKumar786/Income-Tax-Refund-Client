@@ -38,14 +38,18 @@ import {
 } from "@chakra-ui/react";
 
 import { UserContext } from "../context/user";
+import { RoleContext } from "../context/role";
+
+import { useRouter } from "next/router";
 
 const btnStages = ["Send OTP", "Verify"];
 const oneTimePwd = "1234";
 
 export default function AdminLogin() {
   const toast = useToast();
-
+  const router = useRouter();
   const { setPan, setPhone } = useContext(UserContext);
+  const { role, setRole } = useContext(RoleContext);
   const otpRef = useRef<HTMLInputElement | null>(null);
   const [formStage, setFormStage] = useState<number>(0);
   const [data, setData] = useState<DataType>({
@@ -88,8 +92,6 @@ export default function AdminLogin() {
       // TODO : send otp
     } else if (formStage === 1) {
       // TODO : verify otp
-      console.log(data.otp);
-      console.log(typeof data.otp);
       if (data.otp !== oneTimePwd) {
         toast({
           title: "Invalid OTP.",
@@ -101,6 +103,8 @@ export default function AdminLogin() {
         return;
       }
 
+      setRole("Admin");
+      console.log(role);
       toast({
         title: "LogIn Successfully.",
         description: "We've created your account for you.",
@@ -109,11 +113,13 @@ export default function AdminLogin() {
         isClosable: true,
       });
 
+      console.log(role);
       setTimeout(() => {
-        window.location.href = "/user-profile";
+        // window.location.href = "/admin-panel";
+        router.push("/admin-panel");
       }, 1000);
     }
-  }, [data.otp, data.phoneNumber, formStage, setPhone, toast]);
+  }, [data.otp, data.phoneNumber, formStage, role, router, setPhone, setRole, toast]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {

@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 import { UserProvider } from "./context/user";
-import LargeWithLogoLeft from "@/components/Footer";
-import WithSubnavigation from "@/components/UserNavbar";
+import { RoleProvider } from "./context/role";
+import MainLayout from "./MainLayout";
 
 export const metadata: Metadata = {
   title: "Tax Refund",
@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <UserProvider>
-            <WithSubnavigation />
-            {children}
-            <LargeWithLogoLeft />
-          </UserProvider>
+          <RoleProvider>
+            <UserProvider>
+              <MainLayout>{children}</MainLayout>
+            </UserProvider>
+          </RoleProvider>
         </Providers>
       </body>
     </html>

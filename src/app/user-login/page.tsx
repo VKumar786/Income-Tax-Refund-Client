@@ -115,8 +115,6 @@ export default function Multistep() {
       // TODO : send otp
     } else if (formStage === 1) {
       // TODO : verify otp
-      console.log(data.otp);
-      console.log(typeof data.otp);
       if (data.otp !== oneTimePwd) {
         toast({
           title: "Invalid OTP.",
